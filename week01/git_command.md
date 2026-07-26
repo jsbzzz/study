@@ -1,6 +1,23 @@
 ## git의 작동 방식
-- ### 
+- ### git의 구조
+  - Working Directory : 현재 작업 중인 공간
+  - Staging Area : 커밋될 변경 사항을 임시로 저장하는 공간
+  - Repository : 모든 파일과 폴더의 기록을 저장하는 공간
+  - HEAD: 본인의 현재 위치를 가리키는 포인터.  
+    HEAD의 위치를 옮기면 내 Working Directory와 Staging Area도 HEAD의 상태와 동기화 된다.
 
+- ### git에서 관리하는 파일 상태
+  - Untracked : git에서 추적하고 있지 않은 상태. 새로 생성되거나 가져온 파일
+  - Tracked : git에서 추적하는 상태.
+    - Staged : `git add <파일>` 명령어 실행 시 파일은 staged 상태가 된다.<br>
+      이후 commit 실행 시 해당 파일의 변경사항이 repository에 저장된다.
+    - Unmodified : 마지막 커밋된 이후 변경사항이 없는 상태
+    - Modified : working directory의 파일이 마지막에 staging된 때와 다른 상태
+  
+  - 파일의 상태는 `git status` 명령어로 확인 가능.<br>
+    하지만 일반적으로는 커밋될 지 여부만 확인하면 충분.
+   
+   
 ## 기본적인 git 명령어
 - ### git config
   - 사용자 정보 및 환경 설정
@@ -74,7 +91,42 @@
       ```bash
       git log --graph --oneline
       ```
+- ### git branch
+  - 서로 영향을 주지 않는 독릭적인 작업 공간을 만들 수 있다.
+     ```bash
+      git branch # 브랜치 목록 확인 -r 옵션으로 원격 브랜치 확인, -a 옵션으로 모든 브랜치 확인
+      git branch <브랜치> # 브랜치 생성
+      git branch -m <새로운 브랜치> # 현재 브랜치의 이름을 새로운 브랜치 이름으로 변경
+      git branch -m <이전 브랜치> <새로운 브랜치> # 이전 브랜를 새로운 브랜치 이름으로 변경
+      git branch -d <브랜치> # 브랜치 삭제 -D 옵션은 강제 삭제
+      ```
+
+- ### git checkout
+  - 브랜치를 이동할 때 `git checkout <브랜치>` 명령어 사용
+  - 과거의 파일이나 폴더를 가져와 덮어 쓰는 경우
+  
+    - `git checkout <파일명>` 파일을 **staging area**의 내용으로 덮어 쓴다.<br>
+      아예 최근 커밋의 상태로 되돌리려면 `git restore --staged <파일명>` 후 `git restore <파일명>`을 사용하거나 아래의 명령어를 활용해야 한다.
+    
+    - `git checkout <커밋> <파일명>` Working Directory, Staging Area를 해당 커밋에서의 내용으로 덮어쓴다.
+  - 특정 커밋의 상태로 덮어쓰려면 `git checkout <커밋>` 사용. 이 경우 Working Directory,      Staging Area, Repository가 모두 해당 커밋 상태로 비뀌게 됨.<br>
+    - 다시 최근 커밋으로 돌아가려면 `git checkout <브랜치>`를 사용.<br>
+    - 만약 해당 상태에서 수정한 경우
+      - 커밋하지 않고 `git checkout <브랜치>`로 되돌아오면 **수정 내역**을 함께 가져오게 됨.
+      - 커밋을 하고 바로 돌아오면 해당 커밋은 소실
+      - 커밋을 하고 브랜치까지 만들어야 해당 커밋이 저장 됨.
+
+- ### git restore
+  - 파일이나 폴더를 특정 상태로 되돌린다.
+    - `git restore <파일명>` 사용 시 Working Directory의 파일을 **Staging Area**의 상태로 복구된다.
+    - `git restore --staged <파일명>` --staged 옵션 사용 시 **Staging Area**의 파일을 **HEAD**의 파일로 복구한다.
+    - `git restore --source=<커밋> <파일>` 형태로 사용 시 해당 커밋에서의 파일을 Working Directory에만 덮어 쓴다.
+
 - ### git reset
+  - 과거 커밋 시점으로 돌아가고 이후의 커밋 기록은 삭제된다.
+    - `git reset --soft <커밋>` --soft 옵션 사용 시 Staging Area와 Workin Directory의 내용은 유지된다.
+    - `git reset --mixed <커밋>` --mixed 옵션 사용 시 Working Directory의 내용은 유지되지만 Staging Area는 해당 커밋의 내용으로 변경 된다.
+    - `git reset --hard <커밋>` --hard 옵션 사용 시 Staging Area, Working Directory의 내용도 해당 커밋의 내용으로 변경 된다.
 
 - ### git fetch
 - 
@@ -82,12 +134,7 @@
 - 
 - ### git reflog
 - 
-- ### git branch
 - 
-- ### git checkout
-- 
-- 
-
 
 - ### git push
 - ### git merge
