@@ -5,6 +5,7 @@
   - Repository : 모든 파일과 폴더의 기록을 저장하는 공간
   - HEAD: 본인의 현재 위치를 가리키는 포인터.  
     HEAD의 위치를 옮기면 내 Working Directory와 Staging Area도 HEAD의 상태와 동기화 된다.
+  - Tip, head(s) : 브랜치의 가장 끝부분
 
 - ### git에서 관리하는 파일 상태
   - Untracked : git에서 추적하고 있지 않은 상태. 새로 생성되거나 가져온 파일
@@ -55,7 +56,7 @@
     git clone <url>
     ```
 - ### git status
-  - 저장소의 상태를 확인하는 명령어
+  - 저장소의 상태를 확인하는 명령어.
     ```bash
     git status
     ```
@@ -128,15 +129,32 @@
     - `git reset --mixed <커밋>` --mixed 옵션 사용 시 Working Directory의 내용은 유지되지만 Staging Area는 해당 커밋의 내용으로 변경 된다.
     - `git reset --hard <커밋>` --hard 옵션 사용 시 Staging Area, Working Directory의 내용도 해당 커밋의 내용으로 변경 된다.
 
+- ### git merge
+  - `git merge <대상 브랜치>` 대상 브랜치의 변경 내역을 현재 브랜치로 가져와 병합한다. merge에는 다음과 같은 두가지 형태가 있다.
+    - Fast-Forward : 현재 브랜치에 추가된 커밋이 없을 때 브랜치의 포인터만 대상 브랜치의 최신 커밋으로 옮긴다.
+    - 3-Way Merge : 두 브랜치의 작업 내용을 합치는 새로운 Merge Commit을 하나 만들고 현재 브랜치의 포인터를 해당 커밋으로 옮긴다.  
+      만약 두 브랜치에서 파일의 한 부분을 동시에 수정했다면 충돌(Conflict)가 발생한다.  
+      이 경우 충돌이 일어난 부분을 직접 수정하고 다시 commit해야 병합이 완료된다.
+
+- ### git rebase
+  - 현재 브랜치가 파생된 기준점을 대상 브랜치의 최신 커밋으로 재설정한다.  
+    - `git rebase <대상브랜치>` 명령어 실행 시 **현재 브랜치**의 커밋들이 대상 브랜치의 최신 커밋 위에 이어붙여진다.  
+    - 이때 이동한 것은 현재 브랜치뿐이므로, 대상 브랜치의 [팁](#git의-구조)(Tip)은 여전히 과거의 제자리에 머물러 있다.
+  - 충돌(Conflict) 발생 시 
+    - 파일 수정 후 `git add` 및 `git rebase --continue`를 입력한다.
+    - 수정 내역을 적용하지 않으려면 `git rebase --skip`을 입력한다.
+    - rebase 자체를 취소하려면 `git rebase --abort`를 입력한다.
+  - rebase 이후
+      - 대상 브랜치로 이동 후 merge할 경우 Fast-Forward merge되어 분기된 흔적이 남지 않는다.
+      - 대상 브랜치로 이동 후 merge하지 않고 새로운 커밋을 생성할 경우 해당 위치부터 브랜치가 분기된다.
+
 - ### git fetch
-- 
+ 
+- ### git diff
+
 - ### git pull
-- 
+
 - ### git reflog
-- 
-- 
 
 - ### git push
-- ### git merge
-- ### git rebase
 - ###
