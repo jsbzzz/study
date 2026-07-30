@@ -1,0 +1,18 @@
+파일 추가
+git add {올릴 파일이름}
+git commit -m {메시지 내용}
+git push
+
+파일 제거
+파일 제거
+git add {제거한 파일 이름}
+git commit -m {메시지 내용}
+git push
+
+최신화
+git pull
+
+현제 상태 확인
+git status
+
+-- 새로운 브렌치 테스트--
