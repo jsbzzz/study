@@ -8,5 +8,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 커밋 작성자 이메일 출력
+      - name: 이메일 출력
         run: echo "내 이메일: ${{ github.event.head_commit.author.email }}"
