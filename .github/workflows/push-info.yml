@@ -1,0 +1,15 @@
+name: Print Push Info
+
+# 어떤 이벤트가 발생했을 때 실행할지 정의 (여기서는 push)
+on: [push]
+
+jobs:
+  print-info:
+    runs-on: ubuntu-latest # 우분투 서버에서 실행
+
+    steps:
+      - name: Push 정보 출력하기
+        run: |
+          echo "👤 Push한 사람의 닉네임: ${{ github.actor }}"
+          echo "📧 Push한 사람의 이메일: ${{ github.event.pusher.email }}"
+          echo "🌿 Push된 브랜치: ${{ github.ref_name }}"
