@@ -1,4 +1,4 @@
-name: Run main.py
+name: Python Test
 
 on:
   push:
@@ -6,17 +6,17 @@ on:
       - main
 
 jobs:
-  run-main:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 코드 가져오기
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Python 설치
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Run main.py
-        run: python test/main.py
+      - name: Python 파일 실행
+        run: python mainHS.py
