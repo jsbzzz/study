@@ -18,4 +18,6 @@ jobs:
           pyython-version: '3.10'
 
       - name: run python
-        run: python test/main.py
+        run: |
+          $env:PYTHONIOENCODING = "utf-8"
+          python test/main.py
